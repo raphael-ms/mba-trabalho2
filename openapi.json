@@ -1,0 +1,395 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Simple Artist API",
+    "description": "A simple API to illustrate OpenAPI concepts"
+  },
+  "servers": [
+    {
+      "url": "https://as-restful.herokuapp.com/api/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Pessoas": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "cpf": {
+              "type": "string"
+            },
+            "birthday": {
+              "type": "string"
+            },
+            "address_id": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "PessoaPost": {
+        "type": "object",
+        "required": [
+          "name",
+          "cpf",
+          "birthday",
+          "address"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string"
+          },
+          "address": {
+            "type": "integer"
+          }
+        }
+      },
+      "Pessoa": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "cpf": {
+              "type": "string"
+            },
+            "birthday": {
+              "type": "string"
+            },
+            "address_id": {
+              "type": "integer"
+            },
+            "address": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "postcode": {
+                  "type": "string"
+                },
+                "public_place": {
+                  "type": "string"
+                },
+                "number": {
+                  "type": "integer"
+                },
+                "complement": {
+                  "type": "string"
+                },
+                "city_id": {
+                  "type": "integer"
+                },
+                "state_id": {
+                  "type": "integer"
+                },
+                "country_id": {
+                  "type": "integer"
+                },
+                "city": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "acronym": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "state": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "acronym": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "country": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "acronym": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/pessoas": {
+      "get": {
+        "tags": [
+          "Pessoas"
+        ],
+        "description": "Retorna a lista de pessoas registradas",
+        "responses": {
+          "200": {
+            "description": "Sucesso retorna a lista de pessoas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pessoas"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Pessoas"
+        ],
+        "description": "Retorna a lista de pessoas registradas",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PessoaPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso retorna a lista de pessoas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pessoas/{cpf}": {
+      "get": {
+        "tags": [
+          "Pessoas"
+        ],
+        "description": "Retorna uma pessoa com o cpf informado",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso retorna uma pessoa com o cpf informado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pessoa"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pessoas/{id}": {
+      "put": {
+        "tags": [
+          "Pessoas"
+        ],
+        "description": "Retorna a lista de pessoas registradas",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pessoas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso retorna a lista de pessoas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Pessoas"
+        ],
+        "description": "Retorna a lista de pessoas registradas",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso retorna a lista de pessoas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
